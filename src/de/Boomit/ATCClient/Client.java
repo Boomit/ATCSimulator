@@ -21,6 +21,7 @@ public class Client extends JFrame{
 	public static String name = "ATC Simulator";
 	
 	public static Client client;
+	public Radar radar = new Radar(this);
 	
 	/**
 	 * 
@@ -36,7 +37,20 @@ public class Client extends JFrame{
 		super.setResizable(false);
 		super.setVisible(true);
 		
-		
+		Thread radarthread = new Thread("radar"){
+			
+			/**
+			 * 
+			 */
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				//super.run();
+				repaint();
+				radar.update(client);
+			}
+		};
+		radarthread.start();
 	}
 	
 	/**
@@ -46,6 +60,7 @@ public class Client extends JFrame{
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paint(g);
+		radar.paint(g);
 	}
 	
 	/**
