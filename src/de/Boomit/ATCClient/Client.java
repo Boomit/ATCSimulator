@@ -5,6 +5,7 @@ package de.Boomit.ATCClient;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 
@@ -23,6 +24,10 @@ public class Client extends JFrame{
 	public static Client client;
 	public Radar radar = new Radar(this);
 	
+	private Image i;
+	private Graphics doubleG;
+	
+	
 	/**
 	 * 
 	 */
@@ -36,9 +41,7 @@ public class Client extends JFrame{
 		super.getContentPane().setBackground(Color.BLACK);
 		super.setResizable(false);
 		super.setVisible(true);
-		
-		radar  = new Radar(this);
-		
+				
 		Thread radarthread = new Thread("radar"){
 			
 			@Override
@@ -62,7 +65,7 @@ public class Client extends JFrame{
 	}
 	
 	/**
-	 * 
+	 * @param g
 	 */
 	@Override
 	public void paint(Graphics g) {
@@ -72,13 +75,25 @@ public class Client extends JFrame{
 	}
 	
 	/**
-	 * 
+	 * @param g
 	 */
 	@Override
 	public void update(Graphics g) {
 		// TODO Auto-generated method stub
 		super.update(g);
 		
+		if(i == null){
+			i = createImage(this.getSize().width, this.getSize().height);
+			doubleG = i.getGraphics();
+		}
+		
+		doubleG.setColor(getBackground());
+		doubleG.fillRect(0, 0, this.getSize().width, this.getSize().height);
+		
+		doubleG.setColor(getForeground());
+		
+		paint(doubleG);
+		g.drawImage(i, 0, 0, this);
 	}
 
 	/**
