@@ -42,9 +42,10 @@ public class Radar {
 		middleX = client.getWidth() / 2;
 		middleY = client.getHeight() / 2;
 		
-		endX = (int) (client.getWidth() / 2 + Math.cos(angle * Math.PI / 180));
-		endY = (int) (client.getHeight() / 2 + Math.sin(angle * Math.PI / 180));
 		
+		endX = (int) (client.getWidth() / 2 + Math.cos(angle * Math.PI / 180)* radius);
+		endY = (int) (client.getHeight() / 2 + Math.sin(angle * Math.PI / 180)* radius);
+		System.out.println(endX);
 		angle += anglespeed;
 	}
 	

@@ -37,17 +37,25 @@ public class Client extends JFrame{
 		super.setResizable(false);
 		super.setVisible(true);
 		
+		radar  = new Radar(this);
+		
 		Thread radarthread = new Thread("radar"){
 			
-			/**
-			 * 
-			 */
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				//super.run();
-				repaint();
-				radar.update(client);
+				super.run();
+				while(true){
+					radar.update(client);
+					repaint();
+					
+					try {
+						Thread.sleep(27);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		};
 		radarthread.start();
@@ -70,6 +78,7 @@ public class Client extends JFrame{
 	public void update(Graphics g) {
 		// TODO Auto-generated method stub
 		super.update(g);
+		
 	}
 
 	/**
