@@ -6,8 +6,10 @@ package de.Boomit.ATCClient;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
+
 
 /**
  * @author Johannes Hoppenstedt
@@ -23,6 +25,7 @@ public class Client extends JFrame{
 	
 	public static Client client;
 	public Radar radar = new Radar(this);
+	public ArrayList<FlightData> flights = new ArrayList<FlightData>();
 	
 	private Image i;
 	private Graphics doubleG;
@@ -62,6 +65,29 @@ public class Client extends JFrame{
 			}
 		};
 		radarthread.start();
+		
+		Thread flightthread = new Thread("flight"){
+			
+			@SuppressWarnings("static-access")
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				super.run();
+				GenerateFlightData flightdatagenerator = new GenerateFlightData();
+				while(true){
+					flights.add(new FlightData(flightdatagenerator.newEntryX(), flightdatagenerator.newEntryY(), 
+							flightdatagenerator.newStartHeight(), flightdatagenerator.newStartSpeed(), 
+							flightdatagenerator.newStartHeading(), flightdatagenerator.newFlightName()));
+					try {
+						this.sleep(9000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		flightthread.start();
 	}
 	
 	/**
@@ -72,6 +98,9 @@ public class Client extends JFrame{
 		// TODO Auto-generated method stub
 		super.paint(g);
 		radar.paint(g);
+		for(FlightData fl : flights){
+			fl.paint(g);
+		}
 	}
 	
 	/**
