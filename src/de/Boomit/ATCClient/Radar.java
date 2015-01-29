@@ -41,16 +41,16 @@ public class Radar {
 	public void update(Client client){
 		middleX = client.getWidth() / 2;
 		middleY = client.getHeight() / 2;
-		
-		
+				
 		endX = (int) (client.getWidth() / 2 + Math.cos(angle * Math.PI / 180)* radius);
 		endY = (int) (client.getHeight() / 2 + Math.sin(angle * Math.PI / 180)* radius);
-		System.out.println(endX);
+		
 		angle += anglespeed;
 	}
 	
 	/**
 	 * 
+	 * @param g
 	 */
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
